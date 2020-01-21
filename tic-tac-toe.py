@@ -10,7 +10,7 @@ def init_board():  # Misi
     return board
 
 
-""" Additional methods"""
+""" Additional methods """
 
 
 def clear():
@@ -92,9 +92,8 @@ def get_move(board, player):  # Tibi
         if re.fullmatch(r'[A-C][1-3]', move):
             row = spam.index(move[:1])
             col = int(move[1:]) - 1
-            if -1 < row < 3 and -1 < col < 3:
-                if board[row][col] == 0:
-                    return row, col
+            if board[row][col] == 0:
+                return row, col
 
 
 def mark(temp_board, player, i, j, move):  # Misi
@@ -156,10 +155,31 @@ def tictactoe_game(mode='HUMAN-HUMAN'):
     print_result(winner)
 
 
+def ai_human():
+    board = init_board()
+    player = 1
+    while True:
+        print_board(board)
+        if player == 2:
+            row, col = get_ai_move()
+        else:
+            row, col = get_move(board, player)
+        mark(board, player, row, col)
+        if has_won(board, player):
+            print_result(player)
+            break
+        elif is_full(board):
+            print_result(0)
+            break
+        clear()
+        player = 2 if player == 1 else 1
+
+    print_board(board)
+
+
 def human_human():
     board = init_board()
     player = 1
-    # use get_move(), mark(), has_won(), is_full(), and print_board() to create game logic
     while True:
         print_board(board)
         row, col = get_move(board, player)
