@@ -1,42 +1,42 @@
-def init_board():
+def init_board():       # Misi
     """Returns an empty 3-by-3 board (with zeros)."""
     board = []
     return board
 
 
-def get_move(board, player):
+def get_move(board, player):        # Tibi
     """Returns the coordinates of a valid move for player on board."""
     row, col = 0, 0
     return row, col
 
 
-def get_ai_move(board, player):
+def get_ai_move(board, player):         # Tibi
     """Returns the coordinates of a valid move for player on board."""
     row, col = 0, 0
     return row, col
 
 
-def mark(board, player, row, col):
+def mark(board, player, row, col):      # Misi
     """Marks the element at row & col on the board for player."""
     pass
 
 
-def has_won(board, player):
+def has_won(board, player):         # Misi
     """Returns True if player has won the game."""
     return False
 
 
-def is_full(board):
+def is_full(board):     # Tibi
     """Returns True if board is full."""
     return False
 
 
-def print_board(board):
+def print_board(board):         # Tibi
     """Prints a 3-by-3 board on the screen with borders."""
     pass
 
 
-def print_result(winner):
+def print_result(winner):           # Misi
     """Congratulates winner or proclaims tie (if winner equals zero)."""
     pass
 
