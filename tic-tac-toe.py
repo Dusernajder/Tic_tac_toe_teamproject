@@ -2,7 +2,7 @@ import re
 import math
 
 
-def init_board ():  # Misi
+def init_board():  # Misi
     """Returns an empty 3-by-3 board (with zeros)."""
     board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 
@@ -18,7 +18,7 @@ scores = {
 }
 
 
-def get_ai_move ( board, player ):
+def get_ai_move(board, player):
     """Returns the coordinates of a valid move for player on board."""
     bestScore = -math.inf
     row, col = None, None
@@ -35,7 +35,7 @@ def get_ai_move ( board, player ):
     return row, col
 
 
-def minimax ( board, depth, player, isMaximizing ):
+def minimax(board, depth, player, isMaximizing):
     """ Minimax algorithm, or at least something like that. """
     if has_won(board, player):
         return scores[player]
@@ -67,7 +67,7 @@ def minimax ( board, depth, player, isMaximizing ):
 """ ----------miniMAX---------- """
 
 
-def get_move ( board, player ):  # Tibi
+def get_move(board, player):  # Tibi
     """Returns the coordinates of a valid move for player on board."""
     spam = ['A', 'B', 'C']
     while True:
@@ -83,23 +83,18 @@ def get_move ( board, player ):  # Tibi
         print("Wrong input!")
 
 
-def get_ai_move ( board, player ):  # Tibi
-    """Returns the coordinates of a valid move for player on board."""
-    row, col = 0, 0
-    return row, col
-
-
-def mark ( board, player, row, col ):  # Misi
+def mark(board, player, row, col):  # Misi
     """Marks the element at row & col on the board for player."""
     pass
 
 
-def has_won ( board, player ):  # Misi
+def has_won(board, player):  # Misi
     """Returns True if player has won the game."""
+    
     return False
 
 
-def is_full ( board ):  # Tibi
+def is_full(board):  # Tibi
     """Returns True if board is full."""
     for i in range(3):
         for j in range(3):
@@ -123,7 +118,7 @@ def print_result ( winner ):  # Misi
     pass
 
 
-def tictactoe_game ( mode = 'HUMAN-HUMAN' ):
+def tictactoe_game(mode = 'HUMAN-HUMAN'):
     board = init_board()
 
     # use get_move(), mark(), has_won(), is_full(), and print_board() to create game logic
