@@ -1,7 +1,9 @@
 import re
 import math
-from Color import Color
 import os
+import time
+import random
+from Color import Color
 
 
 def init_board():  # Misi
@@ -23,7 +25,7 @@ def print_color(word, color):
     print(color(word) + Color.RESET(''))
 
 
-""" ----------miniMAX---------- """  #  Tibi
+""" ----------miniMAX---------- """
 
 scores = {
     1: 1,  # X
@@ -89,6 +91,8 @@ def get_move(board, player):  # Tibi
             move = input("X\'s move: ").upper()
         elif player == 2:
             move = input("O\'s move: ").upper()
+        if move == "QUIT":
+            exit()
         if re.fullmatch(r'[A-C][1-3]', move):
             row = spam.index(move[:1])
             col = int(move[1:]) - 1
@@ -149,45 +153,78 @@ def print_board(board):  # Tibi
 def print_result(player):  # Misi
     """Congratulates winner or proclaims tie (if winner equals zero)."""
     if player == 0:
-        print("The game is a tie!")
+        print_color("\nThe game is a tie!", Color.YELLOW)
     if player == 1:
-        print("X has won the game!")
+        print_color("\nX has won the game!", Color.GREEN)
     else:
-        print("O has won the game!")
+        print_color("\nO has won the game!", Color.GREEN)
 
 
-def tictactoe_game(mode='HUMAN-HUMAN'):
+def tictactoe_game(mode = 'HUMAN-HUMAN'):
     if mode == 1:
         human_human()
     elif mode == 2:
-        ai_human()
+        human_ai()
+    elif mode == 3:
+        ai_ai()
 
 
-def ai_human():
+def ai_ai():
     board = init_board()
-    player = 1
+    player = random.randint(1, 2)
+
     while True:
         print_board(board)
-        if player == 2:
+        if player == 1:
+            print('X\'s turn (AI)')
             row, col = get_ai_move(board, player)
+            time.sleep(0.5)
         else:
-            row, col = get_move(board, player)
+            print('O\'s turn (AI)')
+            row, col = get_ai_move(board, player)
+            time.sleep(0.5)
         mark(board, player, row, col)
+        clear()
         if has_won(board, player):
+            print_board(board)
             print_result(player)
             break
         elif is_full(board):
+            print_board(board)
             print_result(0)
             break
-        clear()
         player = 2 if player == 1 else 1
 
-    print_board(board)
+
+def human_ai():
+    board = init_board()
+    player = random.randint(1, 2)
+
+    while True:
+        print_board(board)
+        if player == 1:
+            print('AI turn')
+            row, col = get_ai_move(board, player)
+            time.sleep(0.5)
+        else:
+            row, col = get_move(board, player)
+        mark(board, player, row, col)
+        clear()
+        if has_won(board, player):
+            print_board(board)
+            print_result(player)
+            break
+        elif is_full(board):
+            print_board(board)
+            print_result(0)
+            break
+        player = 2 if player == 1 else 1
 
 
 def human_human():
     board = init_board()
-    player = 1
+    player = random.randint(1, 2)
+
     while True:
         print_board(board)
         row, col = get_move(board, player)
@@ -212,7 +249,7 @@ def main_menu():
     if mode == 'QUIT':
         print_color("Quit", Color.RED)
         exit()
-    elif mode == 1 or 2:
+    elif mode == 1 or 2 or 3:
         tictactoe_game(int(mode))
 
 
