@@ -1,3 +1,6 @@
+import re
+
+
 def init_board():       # Misi
     """Returns an empty 3-by-3 board (with zeros)."""
     board = []
@@ -6,8 +9,18 @@ def init_board():       # Misi
 
 def get_move(board, player):        # Tibi
     """Returns the coordinates of a valid move for player on board."""
-    row, col = 0, 0
-    return row, col
+    spam = ['A', 'B', 'C']
+    while True:
+        if player == 1:
+            data = input("X's Move").upper()
+        else:
+            data = input("0's Move").upper()
+        if re.fullmatch(r"[A-C][1-3]"):
+            row = spam.index(data[0])
+            col = int(data[1]) - 1
+            if board[row][col] == 0:
+                return row, col
+        print("Wrong input!")
 
 
 def get_ai_move(board, player):         # Tibi
