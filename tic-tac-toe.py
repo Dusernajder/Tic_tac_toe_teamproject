@@ -142,6 +142,7 @@ def print_board(board):  # Tibi
 
 def print_result(player):  # Misi
     """Congratulates winner or proclaims tie (if winner equals zero)."""
+    print("Player " + str(player) + " has won the game!")
 
 
 def tictactoe_game(mode='HUMAN-HUMAN'):
