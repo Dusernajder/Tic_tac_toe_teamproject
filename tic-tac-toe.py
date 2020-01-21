@@ -4,8 +4,7 @@ import math
 
 def init_board ():  # Misi
     """Returns an empty 3-by-3 board (with zeros)."""
-    board = []
-    return board
+    return
 
 
 """ ----------miniMAX---------- """
@@ -135,6 +134,14 @@ def tictactoe_game ( mode = 'HUMAN-HUMAN' ):
 
 
 def main_menu ():
+    print("Welcome to our Tic tac toe game!")
+    usrIn = input("Press 1 to start a game, press 2 to game settings, press 3 to exit. ")
+    if usrIn == "3":
+        print("Exiting game!")
+        exit()
+    else:
+        print("test")
+
     tictactoe_game('HUMAN-HUMAN')
 
 
