@@ -1,6 +1,6 @@
 import re
 import math
-import Color
+from Color import Color
 import os
 
 
