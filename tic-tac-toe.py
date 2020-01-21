@@ -107,7 +107,7 @@ def has_won(board, player):  # Misi
         # Vertical
         if board[0][i] == player and board[1][i] == player and board[2][i] == player:
             return True
-        # Horizontal
+        # Horizontal
         elif board[i][0] == player and board[i][1] == player and board[i][2] == player:
             return True
         # Diagonal
@@ -117,6 +117,7 @@ def has_won(board, player):  # Misi
         return True
 
     return False
+
 
 def is_full(board):  # Tibi
     """Returns True if board is full."""
@@ -147,7 +148,12 @@ def print_board(board):  # Tibi
 
 def print_result(player):  # Misi
     """Congratulates winner or proclaims tie (if winner equals zero)."""
-    print("Player " + str(player) + " has won the game!")
+    if player == 0:
+        print("The game is a tie!")
+    if player == 1:
+        print("X has won the game!")
+    else:
+        print("O has won the game!")
 
 
 def tictactoe_game(mode='HUMAN-HUMAN'):
