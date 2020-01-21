@@ -57,17 +57,25 @@ def minimax(board, depth, player, isMaximizing):
     if isMaximizing:
         player = 1
         bestScore = -math.inf
+        for i in range(3):
+            for j in range(3):
+                if board[i][j] == 0:
+                    board[i][j] = player
+                    score = minimax(board, depth + 1, player, False)
+                    board[i][j] = 0
+                    bestScore = max(score, bestScore)
+        return bestScore
     else:
         player = 2
         bestScore = math.inf
-    for i in range(3):
-        for j in range(3):
-            if board[i][j] == 0:
-                board[i][j] = player
-                score = minimax(board, depth + 1, player, True)
-                board[i][j] = 0
-                bestScore = min(score, bestScore)
-    return bestScore
+        for i in range(3):
+            for j in range(3):
+                if board[i][j] == 0:
+                    board[i][j] = player
+                    score = minimax(board, depth + 1, player, True)
+                    board[i][j] = 0
+                    bestScore = min(score, bestScore)
+        return bestScore
 
 
 """ ----------miniMAX---------- """
