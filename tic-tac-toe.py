@@ -41,7 +41,11 @@ def has_won(board, player):         # Misi
 
 def is_full(board):     # Tibi
     """Returns True if board is full."""
-    return False
+    for i in range(3):
+        for j in range(3):
+            if board[i][j] == 0:
+                return False
+    return True
 
 
 def print_board(board):         # Tibi
