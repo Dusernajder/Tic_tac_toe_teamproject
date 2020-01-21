@@ -1,16 +1,25 @@
-import sys
-usrIn = ""
+import re
 
 
-def init_board(board):       # Misi
+def init_board():       # Misi
     """Returns an empty 3-by-3 board (with zeros)."""
-    return board
+    return
 
 
 def get_move(board, player):        # Tibi
     """Returns the coordinates of a valid move for player on board."""
-    row, col = 0, 0
-    return row, col
+    spam = ['A', 'B', 'C']
+    while True:
+        if player == 1:
+            data = input("X's Move").upper()
+        else:
+            data = input("0's Move").upper()
+        if re.fullmatch(r"[A-C][1-3]"):
+            row = spam.index(data[0])
+            col = int(data[1]) - 1
+            if board[row][col] == 0:
+                return row, col
+        print("Wrong input!")
 
 
 def get_ai_move(board, player):         # Tibi
@@ -31,7 +40,11 @@ def has_won(board, player):         # Misi
 
 def is_full(board):     # Tibi
     """Returns True if board is full."""
-    return False
+    for i in range(3):
+        for j in range(3):
+            if board[i][j] == 0:
+                return False
+    return True
 
 
 def print_board(board):         # Tibi
@@ -56,19 +69,16 @@ def tictactoe_game(mode='HUMAN-HUMAN'):
     print_result(winner)
 
 
-def main_menu(usrIn):
+def main_menu():
     print("Welcome to our Tic tac toe game!")
     usrIn = input("Press 1 to start a game, press 2 to game settings, press 3 to exit. ")
     if usrIn == "3":
         print("Exiting game!")
-        sys.exit()
+        exit()
     else:
         print("test")
 
     tictactoe_game('HUMAN-HUMAN')
-
-
-main_menu(usrIn)
 
 
 if __name__ == '__main__':
