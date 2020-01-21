@@ -87,7 +87,7 @@ def get_move(board, player):  # Tibi
     while True:
         if player == 1:
             move = input("X\'s move: ").upper()
-        else:
+        elif player == 2:
             move = input("O\'s move: ").upper()
         if re.fullmatch(r'[A-C][1-3]', move):
             row = spam.index(move[:1])
@@ -139,17 +139,10 @@ def print_result(winner):  # Misi
 
 
 def tictactoe_game(mode = 'HUMAN-HUMAN'):
-    board = init_board()
-    player = 1
-
-    # use get_move(), mark(), has_won(), is_full(), and print_board() to create game logic
-    while True:
-        print_board(board)
-        row, col = get_move(board, 1)
-        mark(board, player, row, col)
-
-    player = 2 if player == 1 else 1
-    print_result(winner)
+    if mode == 1:
+        human_human()
+    elif mode == 2:
+        ai_human()
 
 
 def ai_human():
@@ -158,7 +151,7 @@ def ai_human():
     while True:
         print_board(board)
         if player == 2:
-            row, col = get_ai_move()
+            row, col = get_ai_move(board, player)
         else:
             row, col = get_move(board, player)
         mark(board, player, row, col)
