@@ -4,7 +4,9 @@ import math
 
 def init_board ():  # Misi
     """Returns an empty 3-by-3 board (with zeros)."""
-    return
+    board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+
+    return board
 
 
 """ ----------miniMAX---------- """
