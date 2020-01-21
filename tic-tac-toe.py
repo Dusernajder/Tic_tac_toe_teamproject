@@ -99,11 +99,15 @@ def get_move(board, player):  # Tibi
 def mark(board, player, row, col):  # Misi
     """Marks the element at row & col on the board for player."""
     board[row][col] = player
+    pass
 
 
-def has_won(board, player):  # Misi
+def has_won(board, player, row, col):  # Misi
     """Returns True if player has won the game."""
-    return False
+    if :
+        return True
+    else:
+        return False
 
 
 def is_full(board):  # Tibi
@@ -138,7 +142,7 @@ def print_result(winner):  # Misi
     pass
 
 
-def tictactoe_game(mode = 'HUMAN-HUMAN'):
+def tictactoe_game(mode='HUMAN-HUMAN'):
     board = init_board()
     player = 1
 
