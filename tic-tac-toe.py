@@ -104,10 +104,12 @@ def mark(board, player, row, col):  # Misi
 
 def has_won(board, player, row, col):  # Misi
     """Returns True if player has won the game."""
-    if :
-        return True
-    else:
-        return False
+    for row in range(len(board)):
+        for col in range(len(board)):
+            if board[row][col] == player:
+                return True
+            else:
+                return False
 
 
 def is_full(board):  # Tibi
@@ -139,7 +141,9 @@ def print_board(board):  # Tibi
 
 def print_result(winner):  # Misi
     """Congratulates winner or proclaims tie (if winner equals zero)."""
-    pass
+    if has_won() is True:
+        print("You win!")
+        exit()
 
 
 def tictactoe_game(mode='HUMAN-HUMAN'):
