@@ -104,11 +104,13 @@ def mark(board, player, row, col):  # Misi
 def has_won(board, player):  # Misi
     """Returns True if player has won the game."""
     for i in range(3):
-        # collum(vertical)
+        # Vertical
         if board[0][i] == player and board[1][i] == player and board[2][i] == player:
             return True
+        # Horizontal
         elif board[i][0] == player and board[i][1] == player and board[i][2] == player:
             return True
+        # Diagonal
     if board[0][0] == player and board[1][1] == player and board[2][2] == player:
         return True
     if board[0][2] == player and board[1][1] == player and board[2][0] == player:
