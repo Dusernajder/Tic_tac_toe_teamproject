@@ -10,7 +10,7 @@ def init_board():  # Misi
     return board
 
 
-""" Additional methods"""
+""" Additional methods """
 
 
 def clear():
@@ -57,25 +57,17 @@ def minimax(board, depth, player, isMaximizing):
     if isMaximizing:
         player = 1
         bestScore = -math.inf
-        for i in range(3):
-            for j in range(3):
-                if board[i][j] == 0:
-                    board[i][j] = player
-                    score = minimax(board, depth + 1, player, False)
-                    board[i][j] = 0
-                    bestScore = max(score, bestScore)
-        return bestScore
     else:
         player = 2
         bestScore = math.inf
-        for i in range(3):
-            for j in range(3):
-                if board[i][j] == 0:
-                    board[i][j] = player
-                    score = minimax(board, depth + 1, player, True)
-                    board[i][j] = 0
-                    bestScore = min(score, bestScore)
-        return bestScore
+    for i in range(3):
+        for j in range(3):
+            if board[i][j] == 0:
+                board[i][j] = player
+                score = minimax(board, depth + 1, player, True)
+                board[i][j] = 0
+                bestScore = min(score, bestScore)
+    return bestScore
 
 
 """ ----------miniMAX---------- """
@@ -92,9 +84,8 @@ def get_move(board, player):  # Tibi
         if re.fullmatch(r'[A-C][1-3]', move):
             row = spam.index(move[:1])
             col = int(move[1:]) - 1
-            if -1 < row < 3 and -1 < col < 3:
-                if board[row][col] == 0:
-                    return row, col
+            if board[row][col] == 0:
+                return row, col
 
 
 def mark(board, player, row, col):  # Misi
