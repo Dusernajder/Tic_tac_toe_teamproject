@@ -87,7 +87,7 @@ def get_move(board, player):  # Tibi
     while True:
         if player == 1:
             move = input("X\'s move: ").upper()
-        else:
+        elif player == 2:
             move = input("O\'s move: ").upper()
         if re.fullmatch(r'[A-C][1-3]', move):
             row = spam.index(move[:1])
@@ -99,16 +99,18 @@ def get_move(board, player):  # Tibi
 def mark(board, player, row, col):  # Misi
     """Marks the element at row & col on the board for player."""
     board[row][col] = player
-    pass
 
 
-def has_won(board, player, row, col, i):  # Misi
+def has_won(board, player):  # Misi
     """Returns True if player has won the game."""
     for i in range(3):
-        if (board[0][i] and board[1][i] and board[2][i]) == player:
+        # collum(vertical)
+        if board[0][i] == player and board[1][i] == player and board[2][i] == player:
             return True
-        else:
-            return False
+        elif board[i][0] == player and board[i][1] == player and board[i][2] == player:
+            return True
+    if board[0][0] == player and board[1][1] == player and board[2][2] == player:
+        return True
 
 
 def is_full(board):  # Tibi
@@ -138,32 +140,16 @@ def print_board(board):  # Tibi
     print("C  {} | {} | {}".format(temp_board[2][0], temp_board[2][1], temp_board[2][2]))
 
 
-def test_win():
-    if has_won() is True:
-        print("won")
-        exit()
-
-
-def print_result(winner):  # Misi
+def print_result(player):  # Misi
     """Congratulates winner or proclaims tie (if winner equals zero)."""
-    if has_won() is True:
-        print("You win!")
-        exit()
+    print("Player " + str(player) + " has won the game!")
 
 
 def tictactoe_game(mode='HUMAN-HUMAN'):
-    board = init_board()
-    player = 1
-
-    # use get_move(), mark(), has_won(), is_full(), and print_board() to create game logic
-    while True:
-        print_board(board)
-        row, col = get_move(board, 1)
-        mark(board, player, row, col)
-
-    player = 2 if player == 1 else 1
-    print_result(winner)
-    test_win()
+    if mode == 1:
+        human_human()
+    elif mode == 2:
+        ai_human()
 
 
 def ai_human():
@@ -172,7 +158,7 @@ def ai_human():
     while True:
         print_board(board)
         if player == 2:
-            row, col = get_ai_move()
+            row, col = get_ai_move(board, player)
         else:
             row, col = get_move(board, player)
         mark(board, player, row, col)
