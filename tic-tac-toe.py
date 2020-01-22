@@ -1,7 +1,9 @@
 import re
 import math
-from Color import Color
 import os
+import time
+import random
+from Color import Color
 
 
 def init_board():  # Misi
@@ -10,7 +12,7 @@ def init_board():  # Misi
     return board
 
 
-""" Additional methods """
+""" ###### Additional Methods ###### """
 
 
 def clear():
@@ -23,7 +25,7 @@ def print_color(word, color):
     print(color(word) + Color.RESET(''))
 
 
-""" ----------miniMAX---------- """  #  Tibi
+"""" ----------miniMAX---------- """  # Tibi
 
 scores = {
     1: 1,  # X
@@ -34,18 +36,24 @@ scores = {
 
 def get_ai_move(board, player):
     """Returns the coordinates of a valid move for player on board."""
+
     bestScore = -math.inf
     row, col = None, None
+
     for i in range(3):
         for j in range(3):
             # Is the spot available?
             if board[i][j] == 0:
                 board[i][j] = player
-                score = minimax(board, 0, player, False)
+                if player == 1:
+                    score = minimax(board, 0, player, False)
+                else:
+                    score = minimax(board, 0, player, True)
                 board[i][j] = 0
                 if score > bestScore:
                     bestScore = score
                     row, col = i, j
+
     return row, col
 
 
@@ -57,6 +65,7 @@ def minimax(board, depth, player, isMaximizing):
     if isMaximizing:
         player = 1
         bestScore = -math.inf
+
         for i in range(3):
             for j in range(3):
                 if board[i][j] == 0:
@@ -64,10 +73,13 @@ def minimax(board, depth, player, isMaximizing):
                     score = minimax(board, depth + 1, player, False)
                     board[i][j] = 0
                     bestScore = max(score, bestScore)
+
         return bestScore
+
     else:
         player = 2
         bestScore = math.inf
+
         for i in range(3):
             for j in range(3):
                 if board[i][j] == 0:
@@ -75,25 +87,39 @@ def minimax(board, depth, player, isMaximizing):
                     score = minimax(board, depth + 1, player, True)
                     board[i][j] = 0
                     bestScore = min(score, bestScore)
+
         return bestScore
 
 
 """ ----------miniMAX---------- """
 
 
+""" ###### Movement, Mark ######"""
+
+
 def get_move(board, player):  # Tibi
     """Returns the coordinates of a valid move for player on board."""
+
     spam = ['A', 'B', 'C']
-    while True:
-        if player == 1:
-            move = input("X\'s move: ").upper()
-        elif player == 2:
-            move = input("O\'s move: ").upper()
-        if re.fullmatch(r'[A-C][1-3]', move):
-            row = spam.index(move[:1])
-            col = int(move[1:]) - 1
+
+    if player == 1:
+        move = input("X\'s move: ").upper()
+    else:
+        move = input("O\'s move: ").upper()
+    if move == "QUIT":
+        print_color("Quit", Color.RED)
+        exit()
+
+    if re.fullmatch(r'[A-C][1-3]', move):
+        row = spam.index(move[:1])
+        col = int(move[1:]) - 1
+        if -1 < row < 3 and -1 < col < 3:
             if board[row][col] == 0:
                 return row, col
+
+    print_color("Wrong input!", Color.RED)
+
+    return get_move(board, player)
 
 
 def mark(board, player, row, col):  # Misi
@@ -101,16 +127,25 @@ def mark(board, player, row, col):  # Misi
     board[row][col] = player
 
 
+""" ###### Boolean checks ###### """
+
+
 def has_won(board, player):  # Misi
     """Returns True if player has won the game."""
     for i in range(3):
-        # collum(vertical)
+        # Vertical
         if board[0][i] == player and board[1][i] == player and board[2][i] == player:
             return True
+        # Horizontal
         elif board[i][0] == player and board[i][1] == player and board[i][2] == player:
             return True
+        # Diagonal
     if board[0][0] == player and board[1][1] == player and board[2][2] == player:
         return True
+    if board[0][2] == player and board[1][1] == player and board[2][0] == player:
+        return True
+
+    return False
 
 
 def is_full(board):  # Tibi
@@ -120,6 +155,9 @@ def is_full(board):  # Tibi
             if board[i][j] == 0:
                 return False
     return True
+
+
+""" ###### Printing Stuff ######"""
 
 
 def print_board(board):  # Tibi
@@ -142,41 +180,73 @@ def print_board(board):  # Tibi
 
 def print_result(player):  # Misi
     """Congratulates winner or proclaims tie (if winner equals zero)."""
-    print("Player " + str(player) + " has won the game!")
+    if player == 0:
+        print_color("\nThe game is a tie!", Color.YELLOW)
+    if player == 1:
+        print_color("\nX has won the game!", Color.GREEN)
+    else:
+        print_color("\nO has won the game!", Color.GREEN)
 
 
-def tictactoe_game(mode='HUMAN-HUMAN'):
-    if mode == 1:
-        human_human()
-    elif mode == 2:
-        ai_human()
+""" ###### Game Modes ######"""
 
 
-def ai_human():
+def ai_ai():
     board = init_board()
-    player = 1
+    player = random.randint(1, 2)
+
     while True:
         print_board(board)
-        if player == 2:
+        if player == 1:
+            print('X\'s turn (AI)')
             row, col = get_ai_move(board, player)
+            time.sleep(0.5)
         else:
-            row, col = get_move(board, player)
+            print('O\'s turn (AI)')
+            row, col = get_ai_move(board, player)
+            time.sleep(0.5)
         mark(board, player, row, col)
+        clear()
         if has_won(board, player):
+            print_board(board)
             print_result(player)
             break
         elif is_full(board):
+            print_board(board)
             print_result(0)
             break
-        clear()
         player = 2 if player == 1 else 1
 
-    print_board(board)
+
+def human_ai():
+    board = init_board()
+    player = 1  # This is the only way it works, don't change this
+
+    while True:
+        print_board(board)
+        if player == 1:
+            print('AI turn')
+            row, col = get_ai_move(board, player)
+            time.sleep(0.5)
+        else:
+            row, col = get_move(board, player)
+        mark(board, player, row, col)
+        clear()
+        if has_won(board, player):
+            print_board(board)
+            print_result(player)
+            break
+        elif is_full(board):
+            print_board(board)
+            print_result(0)
+            break
+        player = 2 if player == 1 else 1
 
 
 def human_human():
     board = init_board()
-    player = 1
+    player = random.randint(1, 2)
+
     while True:
         print_board(board)
         row, col = get_move(board, player)
@@ -193,6 +263,18 @@ def human_human():
     print_board(board)
 
 
+""" ###### Main Stuff ###### """
+
+
+def tictactoe_game(mode='HUMAN-HUMAN'):
+    if mode == 1:
+        human_human()
+    elif mode == 2:
+        human_ai()
+    elif mode == 3:
+        ai_ai()
+
+
 def main_menu():
     print_color("1. Human vs. Human", Color.CYAN)
     print_color("2. Human vs. AI", Color.MAGENTA)
@@ -201,7 +283,7 @@ def main_menu():
     if mode == 'QUIT':
         print_color("Quit", Color.RED)
         exit()
-    elif mode == 1 or 2:
+    elif mode == 1 or 2 or 3:
         tictactoe_game(int(mode))
 
 
