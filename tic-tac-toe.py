@@ -28,8 +28,8 @@ def print_color(word, color):
 """" ----------miniMAX---------- """  # Tibi
 
 scores = {
-    1: 1,  # X
-    2: -1,  # O
+    1: 10,  # X
+    2: -10,  # O
     0: 0  # .
 }
 
@@ -37,21 +37,22 @@ scores = {
 def get_ai_move(board, player):
     """Returns the coordinates of a valid move for player on board."""
 
-    bestScore = -math.inf
-    row, col = None, None
+    best_score = -math.inf
+    row, col = 0, 0
 
     for i in range(3):
         for j in range(3):
             # Is the spot available?
             if board[i][j] == 0:
                 board[i][j] = player
-                if player == 1:
-                    score = minimax(board, 0, player, False)
-                else:
-                    score = minimax(board, 0, player, True)
+                score = minimax(board, 0, player, False)
+                # print(str(i) + " " + str(j))
                 board[i][j] = 0
-                if score > bestScore:
-                    bestScore = score
+                if score > best_score:
+                    # print("Best move: " + str(i) + " " + str(j))
+                    # print("Score: " + str(score))
+                    # print("Best score: " + str(best_score))
+                    best_score = max(score, best_score)
                     row, col = i, j
 
     return row, col
@@ -64,7 +65,7 @@ def minimax(board, depth, player, isMaximizing):
 
     if isMaximizing:
         player = 1
-        bestScore = -math.inf
+        best_score = -math.inf
 
         for i in range(3):
             for j in range(3):
@@ -72,13 +73,13 @@ def minimax(board, depth, player, isMaximizing):
                     board[i][j] = player
                     score = minimax(board, depth + 1, player, False)
                     board[i][j] = 0
-                    bestScore = max(score, bestScore)
+                    best_score = max(score, best_score)
 
-        return bestScore
+        return best_score
 
     else:
         player = 2
-        bestScore = math.inf
+        best_score = math.inf
 
         for i in range(3):
             for j in range(3):
@@ -86,13 +87,12 @@ def minimax(board, depth, player, isMaximizing):
                     board[i][j] = player
                     score = minimax(board, depth + 1, player, True)
                     board[i][j] = 0
-                    bestScore = min(score, bestScore)
+                    best_score = min(score, best_score)
 
-        return bestScore
+        return best_score
 
 
 """ ----------miniMAX---------- """
-
 
 """ ###### Movement, Mark ######"""
 
@@ -106,16 +106,12 @@ def get_move(board, player):  # Tibi
         move = input("X\'s move: ").upper()
     else:
         move = input("O\'s move: ").upper()
-    if move == "QUIT":
-        print_color("Quit", Color.RED)
-        exit()
 
     if re.fullmatch(r'[A-C][1-3]', move):
         row = spam.index(move[:1])
         col = int(move[1:]) - 1
-        if -1 < row < 3 and -1 < col < 3:
-            if board[row][col] == 0:
-                return row, col
+        if board[row][col] == 0:
+            return row, col
 
     print_color("Wrong input!", Color.RED)
 
@@ -128,6 +124,7 @@ def mark(board, player, row, col):  # Misi
 
 
 """ ###### Boolean checks ###### """
+
 
 def has_won(board, player):  # Misi
     """Returns True if player has won the game."""
@@ -181,13 +178,14 @@ def print_result(player):  # Misi
     """Congratulates winner or proclaims tie (if winner equals zero)."""
     if player == 0:
         print_color("\nThe game is a tie!", Color.YELLOW)
-    if player == 1:
+    elif player == 1:
         print_color("\nX has won the game!", Color.GREEN)
-    else:
+    elif player == 2:
         print_color("\nO has won the game!", Color.GREEN)
 
 
 """ ###### Game Modes ######"""
+
 
 def ai_ai():
     board = init_board()
