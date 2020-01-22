@@ -20,12 +20,7 @@ def clear():
     os.system('clear')
 
 
-def print_color(word, color):
-    '''Prints colored word'''
-    print(color(word) + Color.RESET(''))
-
-
-"""" ----------miniMAX---------- """  # Tibi
+""" ###### miniMAX ###### """  # Tibi
 
 scores = {
     1: 10,  # X
@@ -38,7 +33,7 @@ def get_ai_move(board, player):
     """Returns the coordinates of a valid move for player on board."""
 
     best_score = -math.inf
-    row, col = 0, 0
+    row, col = None, None
 
     for i in range(3):
         for j in range(3):
@@ -74,27 +69,25 @@ def minimax(board, depth, player, isMaximizing):
                     score = minimax(board, depth + 1, player, False)
                     board[i][j] = 0
                     best_score = max(score, best_score)
-
+                    board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
         return best_score
 
     else:
         player = 2
         best_score = math.inf
 
-        for i in range(3):
-            for j in range(3):
-                if board[i][j] == 0:
-                    board[i][j] = player
+        for x in range(3):
+            for y in range(3):
+                if board[x][y] == 0:
+                    board[x][y] = player
                     score = minimax(board, depth + 1, player, True)
-                    board[i][j] = 0
+                    board[x][y] = 0
                     best_score = min(score, best_score)
-
+                    board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
         return best_score
 
 
-""" ----------miniMAX---------- """
-
-""" ###### Movement, Mark ######"""
+""" ###### Movement, Mark ###### """
 
 
 def get_move(board, player):  # Tibi
@@ -123,7 +116,7 @@ def mark(board, player, row, col):  # Misi
     board[row][col] = player
 
 
-""" ###### Boolean checks ###### """
+""" ###### Boolean Checks ###### """
 
 
 def has_won(board, player):  # Misi
@@ -182,6 +175,11 @@ def print_result(player):  # Misi
         print_color("\nX has won the game!", Color.GREEN)
     elif player == 2:
         print_color("\nO has won the game!", Color.GREEN)
+
+
+def print_color(word, color):
+    '''Prints colored word'''
+    print(color(word) + Color.RESET(''))
 
 
 """ ###### Game Modes ######"""
