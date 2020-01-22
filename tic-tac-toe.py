@@ -69,7 +69,7 @@ def minimax(board, depth, player, isMaximizing):
                     score = minimax(board, depth + 1, player, False)
                     board[i][j] = 0
                     best_score = max(score, best_score)
-                    board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+
         return best_score
 
     else:
@@ -83,7 +83,7 @@ def minimax(board, depth, player, isMaximizing):
                     score = minimax(board, depth + 1, player, True)
                     board[x][y] = 0
                     best_score = min(score, best_score)
-                    board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+
         return best_score
 
 
