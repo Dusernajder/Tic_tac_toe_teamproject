@@ -4,6 +4,7 @@ class Color():
     MAGENTA = lambda x: '\033[35m' + str(x)
     CYAN = lambda x: '\033[36m' + str(x)
     RED = lambda x: '\033[31m' + str(x)
+    BLUE = lambda x: '\033[34m' + str(x)
     RESET = lambda x: '\033[0m' + str(x)
 
 
