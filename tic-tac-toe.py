@@ -243,7 +243,7 @@ def ai_ai():
             time.sleep(0.5)
 
         mark(board, player, row, col)
-        # clear()
+        clear()
 
         if has_won(board, player):
             print_board(board)
@@ -277,11 +277,11 @@ def human_ai():
         if has_won(board, player):
             print_board(board)
             print_result(player)
-            exit()
+            break
         elif is_full(board):
             print_board(board)
             print_result(0)
-            exit()
+            break
 
         player = 2 if player == 1 else 1
 
@@ -324,7 +324,7 @@ def tictactoe_game(mode = 'HUMAN-HUMAN'):
 def main_menu():
     """Select playmode"""
 
-    print_color("\n1. Human vs. Human", Color.CYAN)
+    print_color("\n1. Human vs. Human", Color.YELLOW)
     print_color("2. Human vs. AI", Color.MAGENTA)
     print_color("3. AI vs. AI", Color.GREEN)
     print(image)
