@@ -9,8 +9,7 @@ from Color import Color
 
 def init_board():  # Misi
     """Returns an empty 3-by-3 board (with zeros)."""
-    board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
-    return board
+    return [[0, 0, 0] for i in range(3)]
 
 
 """ ###### Additional Methods ###### """
@@ -115,7 +114,7 @@ def get_ai_move(board, player):  # Tibi
             # Check if empty cell
             if board[i][j] == 0:
                 board[i][j] = ai
-                value = minimax(board, 0,  False)
+                value = minimax(board, 0, False)
                 board[i][j] = 0
                 # If current value bigger than best_value, assign value to best_value
                 if value > best_value:
