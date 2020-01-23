@@ -242,7 +242,7 @@ def ai_ai():
             time.sleep(0.5)
 
         mark(board, player, row, col)
-        # clear()
+        clear()
 
         if has_won(board, player):
             print_board(board)
@@ -271,7 +271,7 @@ def human_ai():
             row, col = get_move(board, player)
 
         mark(board, player, row, col)
-        # clear()
+        clear()
 
         if has_won(board, player):
             print_board(board)
@@ -302,7 +302,7 @@ def human_human():
             print_result(0)
             break
 
-        # clear()
+        clear()
         player = 2 if player == 1 else 1
 
     print_board(board)
