@@ -3,6 +3,7 @@ import math
 import os
 import time
 import random
+from Image import image
 from Color import Color
 
 
@@ -233,16 +234,16 @@ def ai_ai():
         print_board(board)
 
         if player == 1:
-            print('X\'s turn (AI)')
+            print_color('X\'s turn (AI)\n', Color.BLUE)
             row, col = get_ai_move(board, player)
             time.sleep(0.5)
         else:
-            print('O\'s turn (AI)')
+            print_color('O\'s turn (AI)\n', Color.RED)
             row, col = get_ai_move(board, player)
             time.sleep(0.5)
 
         mark(board, player, row, col)
-        clear()
+        # clear()
 
         if has_won(board, player):
             print_board(board)
@@ -264,7 +265,7 @@ def human_ai():
         print_board(board)
 
         if player == 1:
-            print_color('AI turn', Color.BLUE)
+            print_color('AI turn\n', Color.BLUE)
             row, col = get_ai_move(board, player)
             time.sleep(0.5)
         else:
@@ -276,11 +277,11 @@ def human_ai():
         if has_won(board, player):
             print_board(board)
             print_result(player)
-            break
+            exit()
         elif is_full(board):
             print_board(board)
             print_result(0)
-            break
+            exit()
 
         player = 2 if player == 1 else 1
 
@@ -322,9 +323,11 @@ def tictactoe_game(mode = 'HUMAN-HUMAN'):
 
 def main_menu():
     """Select playmode"""
-    print_color("1. Human vs. Human", Color.CYAN)
+
+    print_color("\n1. Human vs. Human", Color.CYAN)
     print_color("2. Human vs. AI", Color.MAGENTA)
     print_color("3. AI vs. AI", Color.GREEN)
+    print(image)
 
     mode = input("Choose one of these options: ").upper()
 
@@ -336,5 +339,4 @@ def main_menu():
 
 
 if __name__ == '__main__':
-    # main_menu()
-    human_ai()
+    main_menu()
